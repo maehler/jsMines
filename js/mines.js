@@ -107,10 +107,10 @@
         mines: 10,
         tileStyle: {
             'box-sizing': 'border-box',
-            height: 20,
-            width: 20,
+            'height': 20,
+            'width': 20,
             'background-color': '#CCC',
-            margin: 0,
+            'margin': 0,
             'border-style': 'solid',
             'border-width': 3,
             'border-bottom-color': '#999',
