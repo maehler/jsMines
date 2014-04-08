@@ -35,8 +35,8 @@
 
             // Set dimensions of board
             base.$el.css({
-                height: (base.options.tileStyle.height) * base.options.size.y,
-                width: (base.options.tileStyle.width) * base.options.size.x
+                height: (base.options.tileSize.height) * base.options.size.y,
+                width: (base.options.tileSize.width) * base.options.size.x
             });
 
             base.getBoard(
@@ -48,9 +48,9 @@
             // Fill the boards with tiles
             for (var y = 0; y < base.options.size.y; y++) {
                 for (var x = 0; x < base.options.size.x; x++) {
-                    base.$el.append($('<div/>', {
-                        class: 'tile'
-                    }).css(base.options.tileStyle));
+                    base.$el.append($('<div/>')
+                        .css(base.options.tileSize)
+                        .addClass('mines-tile');
                 }
             }
         }
@@ -96,7 +96,6 @@
                     base.incrementNeighbors(randX, randY);
                 }
             }
-            printBoard(base.board);
         }
 
         // Run init
@@ -105,18 +104,9 @@
 
     $.mines.default = {
         mines: 10,
-        tileStyle: {
-            'box-sizing': 'border-box',
-            'height': 20,
-            'width': 20,
-            'background-color': '#CCC',
-            'margin': 0,
-            'border-style': 'solid',
-            'border-width': 3,
-            'border-bottom-color': '#999',
-            'border-right-color': '#999',
-            'border-left-color': '#EEE',
-            'border-top-color': '#EEE'
+        tileSize: {
+            height: 20,
+            width: 20,
         },
         size: {
             x: 8,
