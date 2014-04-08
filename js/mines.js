@@ -66,7 +66,10 @@
                 return;
             }
             $tile.addClass('mines-clicked');
-            $tile.append(base.board[$tile.data('x')][$tile.data('y')]);
+            var nMines = base.board[$tile.data('x')][$tile.data('y')];
+            if (nMines > 0) {
+                $tile.append(base.board[$tile.data('x')][$tile.data('y')]);
+            }
         }
 
         base.incrementNeighbors = function(x, y) {
