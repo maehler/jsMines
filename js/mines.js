@@ -26,8 +26,8 @@
 
             // Check the number of mines
             if (base.options.mines < 1 ||
-                    base.options.mines > base.options.size.x *
-                        base.options.size.y) {
+                    base.options.mines > (base.options.size.x *
+                        base.options.size.y) / 2) {
                 console.error('illegal number of mines: ' +
                     base.options.mines);
                 return;
