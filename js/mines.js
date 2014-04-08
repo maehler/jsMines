@@ -66,9 +66,16 @@
                 return;
             }
             $tile.addClass('mines-clicked');
-            var nMines = base.board[$tile.data('x')][$tile.data('y')];
-            if (nMines > 0) {
-                $tile.append(base.board[$tile.data('x')][$tile.data('y')]);
+            var tileX = $tile.data('x');
+            var tileY = $tile.data('y');
+            var nMines = base.board[tileX][tileY];
+            if (nMines === 0) {
+                // Open up area
+            } else if ((nMines & MINE) !== 0) {
+                // Die
+                $tile.append('');
+            } else {
+                $tile.append(base.board[tileX][tileY]);
             }
         }
 
