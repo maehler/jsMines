@@ -1,4 +1,6 @@
 .mines-tile {
+   text-align: center;
+   font-family: helvetica;
    float: left;
    box-sizing: border-box;
    background-color: #CCC;
@@ -8,4 +10,9 @@
    border-bottom-color: #999;
    border-left-color: #EEE;
    border-top-color: #EEE;
+}
+
+.mines-clicked {
+   border-width: 0;
+   background-color: #DDD;
 }
