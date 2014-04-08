@@ -50,9 +50,23 @@
                 for (var x = 0; x < base.options.size.x; x++) {
                     base.$el.append($('<div/>')
                         .css(base.options.tileSize)
-                        .addClass('mines-tile');
+                        .addClass('mines-tile')
+                        .data('x', x)
+                        .data('y', y)
+                        .click(base.clickTile)
+                    );
                 }
             }
+        }
+
+        base.clickTile = function() {
+            console.log(this);
+            $tile = $(this);
+            if ($tile.hasClass('mines-clicked')) {
+                return;
+            }
+            $tile.addClass('mines-clicked');
+            $tile.append(base.board[$tile.data('x')][$tile.data('y')]);
         }
 
         base.incrementNeighbors = function(x, y) {
