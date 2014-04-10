@@ -13,6 +13,6 @@
 }
 
 .mines-clicked {
-   border-width: 0;
+   border: 1px dashed #AAA;
    background-color: #DDD;
 }
