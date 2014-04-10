@@ -45,22 +45,22 @@
                 base.options.mines
             );
 
-            // Fill the boards with tiles
-            for (var y = 0; y < base.options.size.y; y++) {
-                for (var x = 0; x < base.options.size.x; x++) {
-                    base.$el.append($('<div/>')
-                        .css(base.options.tileSize)
-                        .addClass('mines-tile')
-                        .data('x', x)
-                        .data('y', y)
-                        .click(base.clickTile)
-                    );
+            base.buildBoard(base.options.size.x, base.options.size.y);
+        }
+
+        base.openField = function(x, y) {
+            var xMin = Math.max(x - 1, 0);
+            var xMax = Math.min(x + 1, base.options.size.x - 1);
+            var yMin = Math.max(y - 1, 0);
+            var yMax = Math.min(y + 1, base.options.size.y - 1);
+            for (var i = yMin; i <= yMax; i++) {
+                for (var j = xMin; j <= xMax; j++) {
+                    base.tileBoard[j][i].click();
                 }
             }
         }
 
         base.clickTile = function() {
-            console.log(this);
             $tile = $(this);
             if ($tile.hasClass('mines-clicked')) {
                 return;
@@ -70,11 +70,13 @@
             var tileY = $tile.data('y');
             var nMines = base.board[tileX][tileY];
             if (nMines === 0) {
-                // Open up area
+                base.openField(tileX, tileY);
             } else if ((nMines & MINE) !== 0) {
                 // Die
+                console.log('die!');
                 $tile.append('');
             } else {
+                // Show no. neighboring mines
                 $tile.append(base.board[tileX][tileY]);
             }
         }
@@ -118,6 +120,30 @@
                     placedMines++;
                     // Add to all neighbors that aren't mines
                     base.incrementNeighbors(randX, randY);
+                }
+            }
+        }
+
+        base.buildBoard = function(x, y) {
+            base.tileBoard = [];
+            for (var i = 0; i < y; i++) {
+                var row = [];
+                for (var j = 0; j < x; j++) {
+                    row.push(null);
+                }
+                base.tileBoard.push(row);
+            }
+            // Fill the boards with tiles
+            for (var y = 0; y < base.options.size.y; y++) {
+                for (var x = 0; x < base.options.size.x; x++) {
+                    var $tile = $('<div/>')
+                        .css(base.options.tileSize)
+                        .addClass('mines-tile')
+                        .data('x', x)
+                        .data('y', y)
+                        .click(base.clickTile);
+                    base.tileBoard[x][y] = $tile;
+                    base.$el.append($tile);
                 }
             }
         }
