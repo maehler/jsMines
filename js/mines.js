@@ -1,6 +1,5 @@
 ;(function($, window, document, undefined) {
 
-    var UNTOUCHED = 0;
     var MINE = 64;
 
     $.mines = function(el, options) {
@@ -116,7 +115,7 @@
             for (var i = 0; i < y; i++) {
                 var row = [];
                 for (var j = 0; j < x; j++) {
-                    row.push(UNTOUCHED);
+                    row.push(0);
                 }
                 base.board.push(row);
             }
