@@ -39,6 +39,9 @@
                 width: (base.options.tileSize.width) * base.options.size.x
             });
 
+            // Disable context menu for the board
+            base.$el.bind('contextmenu', function() { return false; });
+
             base.getBoard(
                 base.options.size.x,
                 base.options.size.y,
@@ -55,14 +58,22 @@
             var yMax = Math.min(y + 1, base.options.size.y - 1);
             for (var i = yMin; i <= yMax; i++) {
                 for (var j = xMin; j <= xMax; j++) {
-                    base.tileBoard[j][i].click();
+                    base.tileBoard[j][i].mousedown();
                 }
             }
         }
 
-        base.clickTile = function() {
+        base.clickTile = function(event) {
             $tile = $(this);
             if ($tile.hasClass('mines-clicked')) {
+                return;
+            }
+            if (event.which === 3) {
+                console.log('toggle flag');
+                $tile.toggleClass('mines-flag');
+                return;
+            }
+            if ($tile.hasClass('mines-flag')) {
                 return;
             }
             $tile.addClass('mines-clicked');
@@ -141,7 +152,7 @@
                         .addClass('mines-tile')
                         .data('x', x)
                         .data('y', y)
-                        .click(base.clickTile);
+                        .mousedown(base.clickTile);
                     base.tileBoard[x][y] = $tile;
                     base.$el.append($tile);
                 }

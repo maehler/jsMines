@@ -16,3 +16,7 @@
    border: 1px dashed #AAA;
    background-color: #DDD;
 }
+
+.mines-flag {
+   background-color: #F00;
+}
