@@ -41,6 +41,8 @@
             // Disable context menu for the board
             base.$el.bind('contextmenu', function() { return false; });
 
+            base.noTiles = base.options.size.x * base.options.size.y;
+
             base.getBoard(
                 base.options.size.x,
                 base.options.size.y,
@@ -88,6 +90,13 @@
             } else {
                 // Show no. neighboring mines
                 $tile.append(base.board[tileX][tileY]);
+            }
+            base.checkVictory();
+        }
+
+        base.checkVictory = function() {
+            if ($('.mines-clicked').length === base.noTiles - base.options.mines) {
+                console.log('You won!');
             }
         }
 
