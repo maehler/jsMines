@@ -88,12 +88,23 @@
             } else if ((nMines & MINE) !== 0) {
                 // Die
                 console.log('die!');
-                $tile.append('');
+                base.showMines();
             } else {
                 // Show no. neighboring mines
                 $tile.append(base.board[tileY][tileX]);
             }
             base.checkVictory();
+        }
+
+        base.showMines = function() {
+            base.gameOver = true;
+            for (var i = 0; i < base.options.size.y; i++) {
+                for (var j = 0; j < base.options.size.x; j++) {
+                    if ((base.board[i][j] & MINE) !== 0) {
+                        base.tileBoard[i][j].addClass('mines-clicked').append('');
+                    }
+                }
+            }
         }
 
         base.checkVictory = function() {
