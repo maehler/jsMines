@@ -79,13 +79,24 @@
             }
         }
 
+        base.updateFlagCount = function() {
+            $('.mines-mineCount').empty().append(base.mineCount);
+        }
+
         base.clickTile = function(event) {
             $tile = $(this);
             if ($tile.hasClass('mines-clicked') || base.gameOver) {
                 return;
             }
             if (event.which === 3) {
-                $tile.toggleClass('mines-flag');
+                if ($tile.hasClass('mines-flag')) {
+                    $tile.removeClass('mines-flag');
+                    base.mineCount++;
+                } else {
+                    $tile.addClass('mines-flag');
+                    base.mineCount--;
+                }
+                base.updateFlagCount();
                 return;
             }
             if ($tile.hasClass('mines-flag')) {
