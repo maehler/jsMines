@@ -72,7 +72,6 @@
                 return;
             }
             if (event.which === 3) {
-                console.log('toggle flag');
                 $tile.toggleClass('mines-flag');
                 return;
             }
@@ -87,7 +86,6 @@
                 base.openField(tileX, tileY);
             } else if ((nMines & MINE) !== 0) {
                 // Die
-                console.log('die!');
                 base.showMines();
             } else {
                 // Show no. neighboring mines
@@ -109,7 +107,6 @@
 
         base.checkVictory = function() {
             if ($('.mines-clicked').length === base.noTiles - base.options.mines) {
-                console.log('You won!');
                 base.gameOver = true;
             }
         }
