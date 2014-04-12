@@ -34,11 +34,14 @@
                 return;
             }
 
-            // Set dimensions of board
-            base.$el.css({
-                height: (base.options.tileSize.height) * base.options.size.y,
-                width: (base.options.tileSize.width) * base.options.size.x
-            });
+            // Create a div for the board
+            base.boardElement = $('<div/>').addClass('mines-board')
+                .css({
+                    height: (base.options.tileSize.height) * base.options.size.y,
+                    width: (base.options.tileSize.width) * base.options.size.x
+                });
+
+            base.$el.append(base.boardElement);
 
             // Disable context menu for the board
             base.$el.bind('contextmenu', function() { return false; });
@@ -173,7 +176,7 @@
                         .data('y', y)
                         .mousedown(base.clickTile);
                     base.tileBoard[y][x] = $tile;
-                    base.$el.append($tile);
+                    base.boardElement.append($tile);
                 }
             }
         }
