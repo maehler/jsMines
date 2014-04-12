@@ -16,6 +16,7 @@
             base.options = $.extend({}, $.mines.default, options);
 
             base.gameOver = false;
+            base.mineCount = base.options.mines;
 
             // Check the dimensions
             if (base.options.size.x < 1 || base.options.size.y < 1) {
@@ -34,6 +35,14 @@
                 return;
             }
 
+            // Create a div for controls
+            var $controlEl = $('<div/>').addClass('mines-control');
+
+            $controlEl.append(
+                $('<div/>').addClass('mines-mineCount')
+                    .append(base.mineCount)
+            );
+
             // Create a div for the board
             base.boardElement = $('<div/>').addClass('mines-board')
                 .css({
@@ -41,6 +50,7 @@
                     width: (base.options.tileSize.width) * base.options.size.x
                 });
 
+            base.$el.append($controlEl);
             base.$el.append(base.boardElement);
 
             // Disable context menu for the board
