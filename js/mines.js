@@ -110,7 +110,7 @@
                 base.openField(tileX, tileY);
             } else if ((nMines & MINE) !== 0) {
                 // Die
-                base.showMines();
+                base.showMines($tile);
             } else {
                 // Show no. neighboring mines
                 $tile.append(base.board[tileY][tileX]);
@@ -118,12 +118,26 @@
             base.checkVictory();
         }
 
-        base.showMines = function() {
+        base.explodeMine = function(x, y) {
+            base.tileBoard[y][x].addClass('mines-clicked').html('');
+        }
+
+        base.explodeMineTimeout = function(x, y, t) {
+            // We need this extra wrapper around setTimeout, 
+            // otherwise all timeouts in the loop would get
+            // the same x and y value.
+            setTimeout(function() {
+                base.explodeMine(x, y);
+            }, t);
+        }
+
+        base.showMines = function(tile) {
             base.gameOver = true;
+            base.explodeMine(tile.data('x'), tile.data('y'));
             for (var i = 0; i < base.options.size.y; i++) {
                 for (var j = 0; j < base.options.size.x; j++) {
                     if ((base.board[i][j] & MINE) !== 0) {
-                        base.tileBoard[i][j].addClass('mines-clicked').append('');
+                        base.explodeMineTimeout(j, i, 100 + Math.floor(Math.random() * 400))
                     }
                 }
             }
