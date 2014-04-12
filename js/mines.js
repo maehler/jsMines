@@ -59,7 +59,7 @@
             var yMax = Math.min(y + 1, base.options.size.y - 1);
             for (var i = yMin; i <= yMax; i++) {
                 for (var j = xMin; j <= xMax; j++) {
-                    base.tileBoard[j][i].mousedown();
+                    base.tileBoard[i][j].mousedown();
                 }
             }
         }
@@ -80,7 +80,7 @@
             $tile.addClass('mines-clicked');
             var tileX = $tile.data('x');
             var tileY = $tile.data('y');
-            var nMines = base.board[tileX][tileY];
+            var nMines = base.board[tileY][tileX];
             if (nMines === 0) {
                 base.openField(tileX, tileY);
             } else if ((nMines & MINE) !== 0) {
@@ -89,7 +89,7 @@
                 $tile.append('');
             } else {
                 // Show no. neighboring mines
-                $tile.append(base.board[tileX][tileY]);
+                $tile.append(base.board[tileY][tileX]);
             }
             base.checkVictory();
         }
@@ -161,7 +161,7 @@
                         .data('x', x)
                         .data('y', y)
                         .mousedown(base.clickTile);
-                    base.tileBoard[x][y] = $tile;
+                    base.tileBoard[y][x] = $tile;
                     base.$el.append($tile);
                 }
             }
