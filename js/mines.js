@@ -15,6 +15,8 @@
         base.init = function() {
             base.options = $.extend({}, $.mines.default, options);
 
+            base.gameOver = false;
+
             // Check the dimensions
             if (base.options.size.x < 1 || base.options.size.y < 1) {
                 console.error('illegal dimensions: (' +
@@ -66,7 +68,7 @@
 
         base.clickTile = function(event) {
             $tile = $(this);
-            if ($tile.hasClass('mines-clicked')) {
+            if ($tile.hasClass('mines-clicked') || base.gameOver) {
                 return;
             }
             if (event.which === 3) {
@@ -97,6 +99,7 @@
         base.checkVictory = function() {
             if ($('.mines-clicked').length === base.noTiles - base.options.mines) {
                 console.log('You won!');
+                base.gameOver = true;
             }
         }
 
