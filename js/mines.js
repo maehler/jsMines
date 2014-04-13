@@ -17,6 +17,7 @@
 
             base.gameOver = false;
             base.mineCount = base.options.mines;
+            base.firstClick = true;
 
             // Check the dimensions
             if (base.options.size.x < 1 || base.options.size.y < 1) {
@@ -38,9 +39,16 @@
             // Create a div for controls
             var $controlEl = $('<div/>').addClass('mines-control');
 
+            // Mine count
             $controlEl.append(
                 $('<div/>').addClass('mines-mineCount')
-                    .append(base.mineCount)
+                    .html(base.mineCount)
+            );
+
+            // Timer
+            $controlEl.append(
+                $('<div/>').addClass('mines-timer')
+                    .html('0:00')
             );
 
             // Create a div for the board
@@ -67,6 +75,19 @@
             base.buildBoard(base.options.size.x, base.options.size.y);
         }
 
+        base.startTimer = function() {
+            var startTime = +new Date();
+            base.timerId = setInterval(function() {
+                var now = +new Date();
+                var diff = now - startTime;
+                $('.mines-timer').html(Math.floor(diff / 1000));
+            }, 500)
+        }
+
+        base.stopTimer = function() {
+            clearInterval(base.timerId);
+        }
+
         base.openField = function(x, y) {
             var xMin = Math.max(x - 1, 0);
             var xMax = Math.min(x + 1, base.options.size.x - 1);
@@ -80,11 +101,15 @@
         }
 
         base.updateFlagCount = function() {
-            $('.mines-mineCount').empty().append(base.mineCount);
+            $('.mines-mineCount').html(base.mineCount);
         }
 
         base.clickTile = function(event) {
             $tile = $(this);
+            if (base.firstClick) {
+                base.startTimer();
+                base.firstClick = false;
+            }
             if ($tile.hasClass('mines-clicked') || base.gameOver) {
                 return;
             }
@@ -133,6 +158,7 @@
 
         base.showMines = function(tile) {
             base.gameOver = true;
+            base.stopTimer();
             base.explodeMine(tile.data('x'), tile.data('y')).addClass('mines-clicked-mine');
             for (var i = 0; i < base.options.size.y; i++) {
                 for (var j = 0; j < base.options.size.x; j++) {
@@ -146,6 +172,7 @@
         base.checkVictory = function() {
             if ($('.mines-clicked').length === base.noTiles - base.options.mines) {
                 base.gameOver = true;
+                base.stopTimer();
             }
         }
 
