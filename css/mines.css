@@ -14,7 +14,11 @@
 
 .mines-clicked {
    border: 1px dashed #AAA;
-   background-color: #DDD;
+   background-color: #DDD !important;
+}
+
+.mines-clicked-mine {
+   background-color: #F00 !important;
 }
 
 .mines-flag {

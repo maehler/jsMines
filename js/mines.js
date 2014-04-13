@@ -119,7 +119,7 @@
         }
 
         base.explodeMine = function(x, y) {
-            base.tileBoard[y][x].addClass('mines-clicked').html('');
+            return base.tileBoard[y][x].addClass('mines-clicked').html('');
         }
 
         base.explodeMineTimeout = function(x, y, t) {
@@ -133,7 +133,7 @@
 
         base.showMines = function(tile) {
             base.gameOver = true;
-            base.explodeMine(tile.data('x'), tile.data('y'));
+            base.explodeMine(tile.data('x'), tile.data('y')).addClass('mines-clicked-mine');
             for (var i = 0; i < base.options.size.y; i++) {
                 for (var j = 0; j < base.options.size.x; j++) {
                     if ((base.board[i][j] & MINE) !== 0) {
