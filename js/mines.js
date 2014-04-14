@@ -119,19 +119,45 @@
             $('.mines-mineCount').html(base.mineCount);
         }
 
+        base.openFlagged = function(x, y) {
+            var xMin = Math.max(x - 1, 0);
+            var xMax = Math.min(x + 1, base.options.size.x - 1);
+            var yMin = Math.max(y - 1, 0);
+            var yMax = Math.min(y + 1, base.options.size.y - 1);
+            var flagCount = 0;
+            for (var i = yMin; i <= yMax; i++) {
+                for (var j = xMin; j <= xMax; j++) {
+                    if (base.tileBoard[i][j].hasClass('mines-flag')) {
+                        flagCount++;
+                    }
+                }
+            }
+            if (flagCount !== base.board[y][x]) {
+                return;
+            } else {
+                base.openField(x, y);
+            }
+        }
+
         base.clickTile = function(event) {
-            $tile = $(this);
+            if (base.gameOver) {
+                return;
+            }
+
+            var $tile = $(this);
+            var tileX = $tile.data('x');
+            var tileY = $tile.data('y');
+
             if (base.firstClick) {
                 base.startTimer();
                 base.firstClick = false;
-            }
-            if ($tile.hasClass('mines-clicked') || base.gameOver) {
-                return;
             }
             if (event.which === 3) {
                 if ($tile.hasClass('mines-flag')) {
                     $tile.removeClass('mines-flag');
                     base.mineCount++;
+                } else if ($tile.hasClass('mines-clicked')) {
+                    base.openFlagged(tileX, tileY);
                 } else {
                     $tile.addClass('mines-flag');
                     base.mineCount--;
@@ -139,12 +165,10 @@
                 base.updateFlagCount();
                 return;
             }
-            if ($tile.hasClass('mines-flag')) {
+            if ($tile.hasClass('mines-flag') || $tile.hasClass('mines-clicked')) {
                 return;
             }
             $tile.addClass('mines-clicked');
-            var tileX = $tile.data('x');
-            var tileY = $tile.data('y');
             var nMines = base.board[tileY][tileX];
             if (nMines === 0) {
                 base.openField(tileX, tileY);
