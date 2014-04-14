@@ -1,3 +1,7 @@
+.mines {
+   font-family: helvetica, sans-serif;
+}
+
 .mines-tile {
    text-align: center;
    font-family: helvetica;
@@ -23,4 +27,16 @@
 
 .mines-flag {
    background-color: #F00;
+}
+
+.mines-control {
+   /*border: 1px solid black;*/
+}
+
+.mines-mineCount {
+   float: left;
+}
+
+.mines-timer {
+   float: right;
 }

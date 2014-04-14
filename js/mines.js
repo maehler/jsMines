@@ -19,6 +19,8 @@
             base.mineCount = base.options.mines;
             base.firstClick = true;
 
+            base.$el.addClass('mines');
+
             // Check the dimensions
             if (base.options.size.x < 1 || base.options.size.y < 1) {
                 console.error('illegal dimensions: (' +
@@ -37,7 +39,12 @@
             }
 
             // Create a div for controls
-            var $controlEl = $('<div/>').addClass('mines-control');
+            var $controlEl = $('<div/>').addClass('mines-control')
+                .css({
+                    height: base.options.tileSize.height,
+                    width: base.options.tileSize.width * base.options.size.x,
+                    'font-size': base.options.tileSize.height - 4
+                });
 
             // Mine count
             $controlEl.append(
@@ -55,7 +62,8 @@
             base.boardElement = $('<div/>').addClass('mines-board')
                 .css({
                     height: (base.options.tileSize.height) * base.options.size.y,
-                    width: (base.options.tileSize.width) * base.options.size.x
+                    width: (base.options.tileSize.width) * base.options.size.x,
+                    clear: 'both'
                 });
 
             base.$el.append($controlEl);
