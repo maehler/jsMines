@@ -88,7 +88,14 @@
             base.timerId = setInterval(function() {
                 var now = +new Date();
                 var diff = now - startTime;
-                $('.mines-timer').html(Math.floor(diff / 1000));
+                var min = Math.floor(diff / (60 * 1000));
+                diff = diff % (60 * 1000)
+                var sec = Math.floor(diff / 1000)
+                if (sec < 10) {
+                    $('.mines-timer').html(min + ':0' + sec);
+                } else {
+                    $('.mines-timer').html(min + ':' + sec);
+                }
             }, 500)
         }
 
