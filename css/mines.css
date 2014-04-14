@@ -14,6 +14,12 @@
    border-bottom-color: #999;
    border-left-color: #EEE;
    border-top-color: #EEE;
+   -webkit-touch-callout: none;
+   -webkit-user-select: none;
+   -khtml-user-select: none;
+   -moz-user-select: none;
+   -ms-user-select: none;
+   user-select: none;
 }
 
 .mines-clicked {
